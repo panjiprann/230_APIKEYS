@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generate API Key</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #2563eb, #1e3a8a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+
+    .card {
+      background: #fff;
+      padding: 35px 40px;
+      border-radius: 20px;
+      width: 420px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    h2 {
+      color: #1e40af;
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      transition: border-color 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background: #1e40af;
+      transform: scale(1.02);
+    }
+
+    #result {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    pre {
+      background: #f1f5f9;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #1e293b;
+      border-left: 5px solid #2563eb;
+      overflow-x: auto;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🔑 Generate API Key</h2>
+    <form id="apiForm">
+      <label for="name">Nama API Key (Opsional)</label>
+      <input type="text" id="name" placeholder="Masukkan nama API key..." />
+      <button type="submit">Generate</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById('apiForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+      });
+      const data = await res.json();
+
+      document.getElementById('result').innerHTML = `
+        <div class="fade-in">
+          <pre><b>Nama:</b> ${data.name || '(Tanpa Nama)'}\n<b>API Key:</b> ${data.apiKey}</pre>
+        </div>`;
+    });
+  </script>
+</body>
+</html>
