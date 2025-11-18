@@ -3,13 +3,13 @@ const path = require('path');
 const mysql = require('mysql2');
 const crypto = require('crypto');
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Koneksi ke MySQL (buat database manual di MySQL: CREATE DATABASE apikey_db;)
 const db = mysql.createConnection({
   host: '127.0.0.1',
   user: 'root',
-  password: 'Msi15153',
+  password: 'Bumi12345+',
   database: 'apikey_db',
   port: 3307 // 💥 tambahkan baris ini
 });
